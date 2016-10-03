@@ -5,15 +5,16 @@
  *      Author: etudiant
  */
 #include "ligne.h"
+#include <iostream>
+#include <string>
 
 
 Ligne::Ligne(const std::vector<std::string>& ligne_gtfs)
 {
-	this->m_id = (unsigned int)std::stoul(ligne_gtfs[0], nullptr, 0);
-	this->m_numero = ligne_gtfs[2];
-	this->m_description = ligne_gtfs[4];
 
-	//route color
+	this->m_id = (unsigned int)std::stoul(ligne_gtfs[0], nullptr, 0);
+	this->m_numero = ligne_gtfs[2].substr(1, ligne_gtfs[2].size() - 2);
+	this->m_description = ligne_gtfs[4].substr(1, ligne_gtfs[4].size() - 2);
 	this->m_categorie = couleurToCategorie(ligne_gtfs[7]);
 	this->m_voyages = std::vector<Voyage*>();
 
@@ -130,7 +131,7 @@ this->m_description = description;
 }
 
 std::ostream& operator <<(std::ostream& f, const Ligne& p_ligne){
-f<< Ligne::categorieToString(p_ligne.m_categorie) + " " + std::to_string(p_ligne.m_id) +" : " + p_ligne.m_description;
+f<< Ligne::categorieToString(p_ligne.m_categorie) + " " + (p_ligne.m_numero) +" : " + p_ligne.m_description;
 return f;
 }
 
